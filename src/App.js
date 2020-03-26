@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Link, Route, Switch } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getProfileFetch, logout } from "./actions/user_actions";
+import Home from "./components/Home/Home";
+import Dashboard from "./components/Dashboard/Dashboard";
+import NotFound from "./components/NotFound/NotFound";
 
-function App() {
+const App = props => {
+  const isUser = useSelector(state => state.currentUser.User);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProfileFetch());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      </ul>
+      {isUser && (
+        <button
+          onClick={() => {
+            dispatch(logout());
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Log Out
+        </button>
+      )}
+
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;
