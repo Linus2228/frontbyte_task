@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfileFetch, logout } from "./actions/user_actions";
 import Home from "./components/Home/Home";
+import Header from "./components/Header/Header";
 import Dashboard from "./components/Dashboard/Dashboard";
 import NotFound from "./components/NotFound/NotFound";
 
@@ -14,26 +15,13 @@ const App = props => {
     dispatch(getProfileFetch());
   }, []);
 
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
   return (
     <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
-      </ul>
-      {isUser && (
-        <button
-          onClick={() => {
-            dispatch(logout());
-          }}
-        >
-          Log Out
-        </button>
-      )}
-
+      <Header isUser={isUser} handleLogout={handleLogout} />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/dashboard" component={Dashboard} />
