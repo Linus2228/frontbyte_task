@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getProfileFetch, logout } from "./actions/user_actions";
+import { keepAliveStart, logout } from "./actions/user_actions";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -12,7 +12,8 @@ const App = props => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProfileFetch());
+    // dispatch(getProfileFetch());
+    keepAliveStart(dispatch)
   }, []);
 
   const handleLogout = () => {

@@ -3,7 +3,7 @@ import { LOGIN_USER, LOGOUT_USER } from "./types";
 
 let timer = null;
 
-const keepAlive = dispatch => {
+export const keepAlive = dispatch => {
   const token = localStorage.getItem("token");
   axios
     .put(`/session/KeepAlive/${token}`)
@@ -30,7 +30,7 @@ export const userLoginFetch = user => dispatch => {
   return axios
     .post("/session/logon", user)
     .then(response => {
-      timer = setInterval(() => {keepAlive(dispatch)}, 30000);
+      timer = setInterval(() => {keepAlive(dispatch)}, 5000);
       localStorage.setItem("token", response.data.Token);
       localStorage.setItem("userName", user.User);
       localStorage.setItem("companyName", user.Company);
@@ -41,20 +41,14 @@ export const userLoginFetch = user => dispatch => {
     });
 };
 
-export const getProfileFetch = () => dispatch => {
-  const token = localStorage.getItem("token");
+export const keepAliveStart = dispatch => {
+  const token = !!localStorage.getItem("token");
   const userName = localStorage.getItem("userName");
   const companyName = localStorage.getItem("companyName");
 
   if (token) {
-    return axios
-      .put(`/session/KeepAlive/${token}`)
-      .then(response => {
-        dispatch(loginUser({ userName, companyName }));
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    dispatch(loginUser({ userName, companyName }))
+    timer = setInterval(() => {keepAlive(dispatch)}, 5000);
   }
 };
 
