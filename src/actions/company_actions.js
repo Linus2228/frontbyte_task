@@ -9,7 +9,7 @@ export const getSummary = payload => ({
 export const getSummaryFetch = () => dispatch => {
   const token = localStorage.getItem("token")
   return axios
-    .get("/Data/GetSummary", { headers: { key: token }})
+    .get("/Data/GetSummary", { headers: { SessionToken: token }})
     .then(response => {
       dispatch(getSummary(response.data));
     })

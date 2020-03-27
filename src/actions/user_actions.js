@@ -1,6 +1,26 @@
 import axios from "axios";
 import { LOGIN_USER, LOGOUT_USER } from "./types";
 
+let timer = null;
+
+const keepAlive = dispatch => {
+  const token = localStorage.getItem("token");
+  axios
+    .put(`/session/KeepAlive/${token}`)
+    .catch(error => {
+      if (error.response.data.ErrorCode === 'InvalidSessionToken') {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("companyName");
+        dispatch(logoutUser());
+        if (timer) {
+          clearInterval(timer);
+          timer = null
+        }
+      }
+    });
+};
+
 export const loginUser = user => ({
   type: LOGIN_USER,
   payload: user
@@ -10,6 +30,7 @@ export const userLoginFetch = user => dispatch => {
   return axios
     .post("/session/logon", user)
     .then(response => {
+      timer = setInterval(() => {keepAlive(dispatch)}, 5000);
       localStorage.setItem("token", response.data.Token);
       localStorage.setItem("userName", user.User);
       localStorage.setItem("companyName", user.Company);
@@ -29,10 +50,9 @@ export const getProfileFetch = () => dispatch => {
     return axios
       .put(`/session/KeepAlive/${token}`)
       .then(response => {
-        dispatch(loginUser({userName, companyName}));
+        dispatch(loginUser({ userName, companyName }));
       })
       .catch(error => {
-        localStorage.removeItem("token");
         console.log(error);
       });
   }
@@ -51,6 +71,10 @@ export const logout = () => dispatch => {
       localStorage.removeItem("userName");
       localStorage.removeItem("companyName");
       dispatch(logoutUser());
+      if (timer) {
+        clearInterval(timer);
+        timer = null
+      }
     })
     .catch(error => {
       console.log(error);
