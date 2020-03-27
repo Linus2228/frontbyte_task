@@ -30,7 +30,7 @@ export const userLoginFetch = user => dispatch => {
   return axios
     .post("/session/logon", user)
     .then(response => {
-      timer = setInterval(() => {keepAlive(dispatch)}, 5000);
+      timer = setInterval(() => {keepAlive(dispatch)}, 30000);
       localStorage.setItem("token", response.data.Token);
       localStorage.setItem("userName", user.User);
       localStorage.setItem("companyName", user.Company);
@@ -48,7 +48,7 @@ export const keepAliveStart = dispatch => {
 
   if (token) {
     dispatch(loginUser({ userName, companyName }))
-    timer = setInterval(() => {keepAlive(dispatch)}, 5000);
+    timer = setInterval(() => {keepAlive(dispatch)}, 30000);
   }
 };
 
