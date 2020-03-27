@@ -11,7 +11,9 @@ export const userLoginFetch = user => dispatch => {
     .post("/session/logon", user)
     .then(response => {
       localStorage.setItem("token", response.data.Token);
-      dispatch(loginUser(user));
+      localStorage.setItem("userName", user.User);
+      localStorage.setItem("companyName", user.Company);
+      dispatch(loginUser({ userName: user.User, companyName: user.Company }));
     })
     .catch(error => {
       console.log(error);
@@ -20,11 +22,14 @@ export const userLoginFetch = user => dispatch => {
 
 export const getProfileFetch = () => dispatch => {
   const token = localStorage.getItem("token");
+  const userName = localStorage.getItem("userName");
+  const companyName = localStorage.getItem("companyName");
+
   if (token) {
     return axios
       .put(`/session/KeepAlive/${token}`)
       .then(response => {
-        dispatch(loginUser(response.data.user));
+        dispatch(loginUser({userName, companyName}));
       })
       .catch(error => {
         localStorage.removeItem("token");
@@ -43,6 +48,8 @@ export const logout = () => dispatch => {
     .delete(`/session/logout/${token}`)
     .then(response => {
       localStorage.removeItem("token");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("companyName");
       dispatch(logoutUser());
     })
     .catch(error => {

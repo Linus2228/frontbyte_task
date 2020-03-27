@@ -4,7 +4,7 @@ import { userLoginFetch } from "../../actions/user_actions";
 import LoginForm from "./LoginForm";
 
 const Home = props => {
-  const isUser = !!useSelector(state => state.currentUser.User);
+  const isUser = !!useSelector(state => state.currentUser.userName);
   const dispatch = useDispatch();
 
   return (

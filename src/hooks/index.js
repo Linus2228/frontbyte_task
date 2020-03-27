@@ -13,19 +13,21 @@ export const useLocalStorage = (key, initialValue) => {
   });
 
   useEffect(() => {
-    window.localStorage.setItem(key, storedValue);
+    localStorage.setItem(key, storedValue);
   }, [storedValue]);
 
   return [storedValue, setStoredValue];
 };
 
-export const useProtectRoute = () => {
-  const isUser = !!useSelector(state => state.currentUser.User);
+export const useProtectRoute = (callback) => {
+  const isUser = !!localStorage.getItem('token');;
   const history = useHistory();
   useLayoutEffect(() => {
     if (!isUser) {
       history.push("/");
       alert("Please log in");
+    } else {
+      callback && callback(true)
     }
   }, [isUser]);
 };

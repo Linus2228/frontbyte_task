@@ -8,7 +8,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import NotFound from "./components/NotFound/NotFound";
 
 const App = props => {
-  const isUser = useSelector(state => state.currentUser.User);
+  const isUser = useSelector(state => state.currentUser.userName);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,8 +16,8 @@ const App = props => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   return (
     <div>
