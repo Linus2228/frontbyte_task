@@ -1,36 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useProtectRoute } from "../../hooks";
 import { getSummaryFetch } from "../../actions/company_actions";
 
 const Dashboard = () => {
-  const [canLoad, setCanLoad] = useState(null);
-  useProtectRoute(setCanLoad);
-
-  const dispatch = useDispatch();
   const summary = useSelector(state => state.company.summary);
   const isSummary = Object.keys(summary).length !== 0;
 
-  useEffect(() => {
-    if (canLoad) {
-      dispatch(getSummaryFetch());
-    }
-  }, [canLoad]);
-
-  const renderSummary = () => {
-    if (!isSummary) return null;
-    return (
-      <div>
-        {summary.Trainings.map(item => (
-          <div>
-            <h3>{item.Name}</h3>
-            <h3>{item.Progress}</h3>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  useProtectRoute(getSummaryFetch);
 
   const renderLineChart = () => {
     if (!isSummary) return null;

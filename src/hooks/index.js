@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export const useLocalStorage = (key, initialValue) => {
@@ -19,15 +19,17 @@ export const useLocalStorage = (key, initialValue) => {
   return [storedValue, setStoredValue];
 };
 
-export const useProtectRoute = (callback) => {
-  const isUser = !!localStorage.getItem('token');;
+export const useProtectRoute = action => {
+  const isUser = !!localStorage.getItem("token");
   const history = useHistory();
+  const dispatch = useDispatch();
+
   useLayoutEffect(() => {
     if (!isUser) {
       history.push("/");
       alert("Please log in");
     } else {
-      callback && callback(true)
+      action && dispatch(action());
     }
   }, [isUser]);
 };
