@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./header.css"
+import "./header.css";
 
 const Header = ({ isUser, handleLogout }) => {
   return (
@@ -12,10 +12,13 @@ const Header = ({ isUser, handleLogout }) => {
         </li>
         {isUser && (
           <>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <button onClick={handleLogout}>Log Out</button>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+            <button onClick={handleLogout}>Log Out</button>
           </>
         )}
       </ul>
