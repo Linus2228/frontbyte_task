@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -97,6 +97,10 @@ export const UsersTable = props => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  useEffect(() => {
+    setPage(0);
+  }, [props.search]);
+
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
 
@@ -129,7 +133,7 @@ export const UsersTable = props => {
                 {row.Firstname}
               </TableCell>
               <TableCell>{row.Surname}</TableCell>
-              <TableCell>{row.Nationality}</TableCell>
+              <TableCell>{row.NationalityName}</TableCell>
             </TableRow>
           ))}
 

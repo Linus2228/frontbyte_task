@@ -1,8 +1,9 @@
-import { GET_SUMMARY, GET_USERS } from "../actions/types";
+import { GET_SUMMARY, GET_USERS, GET_NATIONALITIES } from "../actions/types";
 
 const initialState = {
   summary: {},
-  users: []
+  users: [],
+  nationalities: []
 };
 
 export default (state = initialState, action) => {
@@ -11,6 +12,8 @@ export default (state = initialState, action) => {
       return { ...state, summary: action.payload };
     case GET_USERS:
       return { ...state, users: action.payload };
+    case GET_NATIONALITIES:
+      return { ...state, nationalities: action.payload };
     default:
       return state;
   }

@@ -19,7 +19,7 @@ export const useLocalStorage = (key, initialValue) => {
   return [storedValue, setStoredValue];
 };
 
-export const useProtectRoute = action => {
+export const useProtectRoute = arrayOfActions => {
   const isUser = !!localStorage.getItem("token");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -29,7 +29,9 @@ export const useProtectRoute = action => {
       history.push("/");
       alert("Please log in");
     } else {
-      action && dispatch(action());
+      if (arrayOfActions) {
+        arrayOfActions.forEach(action => dispatch(action()));
+      }
     }
   }, [isUser]);
 };

@@ -8,7 +8,7 @@ const Dashboard = () => {
   const summary = useSelector(state => state.company.summary);
   const isSummary = Object.keys(summary).length !== 0;
 
-  useProtectRoute(getSummaryFetch);
+  useProtectRoute([getSummaryFetch]);
 
   const renderLineChart = () => {
     if (!isSummary) return null;
