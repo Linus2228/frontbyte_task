@@ -8,7 +8,7 @@ const Dashboard = () => {
   const summary = useSelector(state => state.company.summary);
   const isSummary = Object.keys(summary).length !== 0;
 
-  useProtectRoute([getSummaryFetch]);
+  useProtectRoute([getSummaryFetch()]);
 
   const renderLineChart = () => {
     if (!isSummary) return null;
@@ -19,7 +19,6 @@ const Dashboard = () => {
       pv: 1400,
       amt: 2400
     }));
-    console.log(data);
     return (
       <LineChart width={600} height={300} data={data}>
         <Line type="monotone" dataKey="uv" stroke="#8884d8" />

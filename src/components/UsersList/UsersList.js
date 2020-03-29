@@ -1,37 +1,61 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useProtectRoute } from "../../hooks";
 import {
   getUsersFetch,
-  getNationalitiesFetch
+  getNationalities,
+  getNationalitiesHash
 } from "../../actions/company_actions";
 import UsersTable from "./UsersTable";
 
-const nationalitiesHash = {};
+const initialNationalitiesHash = {};
 
-const Dashboard = () => {
+const UsersList = () => {
   const [search, setSearch] = useState("");
   const fetchedUsers = useSelector(state => state.company.users);
-  const nationalities = useSelector(state => state.company.nationalities);
+  const { data: nationalities } = useSelector(state => state.company.nationalities);
+  const isNationalities = nationalities.length !== 0;
+  const isFetchedUsers = fetchedUsers.length !== 0;
+  const nationalitiesHash = useSelector(
+    state => state.company.nationalitiesHash
+  );
+  const dispatch = useDispatch();
   const shouldDisplay = fetchedUsers.length !== 0 && nationalities.length !== 0;
+  const isNationalitiesHash = Object.keys(nationalitiesHash).length !== 0;
 
-  useProtectRoute([getUsersFetch, getNationalitiesFetch]);
+  const getActions = () => {
+    const actions = [];
+    if (!isNationalities) {
+      actions.push(getNationalities());
+    }
+    if (!isFetchedUsers) {
+      actions.push(getUsersFetch());
+    }
+    return actions;
+  };
+
+  useProtectRoute(getActions());
 
   if (!shouldDisplay) return <h3>No users to display</h3>;
 
-  const findNationalityObject = code => {
+  const getNationalityObject = code => {
     const nationalityObject = nationalities.find(item => item.Id === code);
-    nationalitiesHash[code] = nationalityObject;
+    initialNationalitiesHash[code] = nationalityObject;
     return nationalityObject;
   };
 
   const users = fetchedUsers
     .filter(user => user.Firstname.toLowerCase().includes(search.toLowerCase()))
-    .map(user => {
+    .map((user, index, array) => {
       const nationalityCode = user.Nationality;
-      const nationalityObject =
-        nationalitiesHash[nationalityCode] ||
-        findNationalityObject(nationalityCode);
+      const nationalityObject = isNationalitiesHash
+        ? nationalitiesHash[nationalityCode]
+        : initialNationalitiesHash[nationalityCode] ||
+          getNationalityObject(nationalityCode);
+
+      if (index === array.length - 1 && !isNationalitiesHash) {
+        dispatch(getNationalitiesHash(initialNationalitiesHash));
+      }
       const { Name, Order } = nationalityObject;
       return { ...user, NationalityName: Name, Order };
     })
@@ -54,4 +78,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UsersList;

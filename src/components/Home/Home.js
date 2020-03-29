@@ -14,7 +14,7 @@ const Home = props => {
       ) : (
         <>
           <h1>Your awesome app!</h1>
-          <h1>Please log in</h1>
+          <h1>Please login</h1>
           <LoginForm userLoginFetch={userInfo => {dispatch(userLoginFetch(userInfo))}} />
         </>
       )}

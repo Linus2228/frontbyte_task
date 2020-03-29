@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
@@ -14,6 +15,8 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
 
 const useStyles1 = makeStyles(theme => ({
   root: {
@@ -21,6 +24,13 @@ const useStyles1 = makeStyles(theme => ({
     marginLeft: theme.spacing(2.5)
   }
 }));
+
+const tableCells = [
+  { title: "Name", id: 0 },
+  { title: "Surname", id: 1 },
+  { title: "Nationality", id: 3 },
+  { title: "Edit User", id: 4 }
+];
 
 function TablePaginationActions(props) {
   const classes = useStyles1();
@@ -96,6 +106,7 @@ export const UsersTable = props => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const history = useHistory();
 
   useEffect(() => {
     setPage(0);
@@ -113,27 +124,42 @@ export const UsersTable = props => {
     setPage(0);
   };
 
+  const renderTableCells = () => (
+    <>
+      {tableCells.map(cell => (
+        <TableCell key={cell.id}>{cell.title}</TableCell>
+      ))}
+    </>
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Surname</TableCell>
-            <TableCell>Nationality</TableCell>
-          </TableRow>
+          <TableRow>{renderTableCells()}</TableRow>
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
             ? users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : users
-          ).map(row => (
-            <TableRow key={row.Id}>
+          ).map(user => (
+            <TableRow key={user.Id}>
               <TableCell component="th" scope="row">
-                {row.Firstname}
+                {user.Firstname}
               </TableCell>
-              <TableCell>{row.Surname}</TableCell>
-              <TableCell>{row.NationalityName}</TableCell>
+              <TableCell>{user.Surname}</TableCell>
+              <TableCell>{user.NationalityName}</TableCell>
+              <TableCell>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    history.push(`/users/${user.Id}`);
+                  }}
+                >
+                  Edit
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
 

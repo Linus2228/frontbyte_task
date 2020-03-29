@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Dashboard from "./components/Dashboard/Dashboard";
 import UsersList from "./components/UsersList/UsersList";
+import UserDetails from "./components/UserDetails/UserDetails";
 import NotFound from "./components/NotFound/NotFound";
 
 const App = props => {
@@ -26,6 +27,7 @@ const App = props => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/users/:id" component={UserDetails} />
         <Route path="/users" component={UsersList} />
         <Route component={NotFound} />
       </Switch>
