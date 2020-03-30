@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useProtectRoute } from "../../hooks";
-import { getSummaryFetch } from "../../actions/company_actions";
+import { getSummaryFetch } from "../../actions/companyActions";
 import { DashboardInt } from "../../utils/int";
 
 const Dashboard = () => {

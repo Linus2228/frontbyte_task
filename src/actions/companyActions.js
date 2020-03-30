@@ -1,5 +1,5 @@
 import axios from "axios";
-import { logout } from "./user_actions";
+import { logout } from "./userActions";
 import {
   GET_SUMMARY,
   GET_USERS,

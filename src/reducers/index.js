@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import currentUser from "./auth_reducer";
-import company from "./company_reducer";
-import controls from "./controls_reducer";
+import auth from "./authReducer";
+import company from "./companyReducer";
+import controls from "./controlsReducer";
 
 const rootReducer = combineReducers({
-  currentUser,
+  auth,
   company,
   controls
 });

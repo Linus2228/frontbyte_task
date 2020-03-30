@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { keepAliveStart, logout } from "./actions/user_actions";
+import { keepAliveStart, logout } from "./actions/userActions";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -10,7 +10,7 @@ import UserDetails from "./components/UserDetails/UserDetails";
 import NotFound from "./components/NotFound/NotFound";
 
 const App = props => {
-  const isUser = useSelector(state => state.currentUser.userName);
+  const isUser = useSelector(state => state.auth.currentUser.userName);
   const dispatch = useDispatch();
 
   useEffect(() => {

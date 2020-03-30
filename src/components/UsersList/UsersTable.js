@@ -110,7 +110,6 @@ export const UsersTable = props => {
 
   const { tableCells } = UsersTableInt[lang];
   const updatedTableCells = generateTableCellsDecorator(0, tableCells)();
-  console.log(updatedTableCells);
 
   useEffect(() => {
     setPage(0);

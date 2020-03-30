@@ -1,13 +1,8 @@
 import axios from "axios";
 import { LOGIN_USER, LOGOUT_USER } from "./types";
+import { clearUserDataInLocalStorage } from "../utils";
 
 let timer = null;
-
-const clearUserDataInLocalStorage = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("userName");
-  localStorage.removeItem("companyName");
-};
 
 export const keepAlive = dispatch => {
   const token = localStorage.getItem("token");

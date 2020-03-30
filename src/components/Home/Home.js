@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLoginFetch } from "../../actions/user_actions";
+import { userLoginFetch } from "../../actions/userActions";
 import LoginForm from "./LoginForm";
 import { HomeInt } from "../../utils/int";
 
 const Home = props => {
-  const userName = useSelector(state => state.currentUser.userName);
+  const userName = useSelector(state => state.auth.currentUser.userName);
   const lang = useSelector(state => state.controls.lang.value);
   const dispatch = useDispatch();
 
-  const { greeting, desc, login} = HomeInt[lang];
+  const { greeting, desc, login } = HomeInt[lang];
 
   return (
     <div>

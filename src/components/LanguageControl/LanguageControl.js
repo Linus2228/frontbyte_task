@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { setLanguage } from "../../actions/controls_actions";
+import { setLanguage } from "../../actions/controlsActions";
 
 const LanguageControl = () => {
   const { value } = useSelector(state => state.controls.lang);

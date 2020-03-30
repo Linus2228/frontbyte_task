@@ -5,7 +5,7 @@ import {
   getUsersFetch,
   getNationalities,
   getNationalitiesHash
-} from "../../actions/company_actions";
+} from "../../actions/companyActions";
 import UsersTable from "./UsersTable";
 import { UsersListInt } from "../../utils/int";
 

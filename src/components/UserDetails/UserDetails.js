@@ -8,7 +8,7 @@ import {
   updateUser,
   getNationalities,
   getRanks
-} from "../../actions/company_actions";
+} from "../../actions/companyActions";
 import { useProtectRoute } from "../../hooks";
 import { UserDetailsInt } from "../../utils/int";
 
