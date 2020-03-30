@@ -80,8 +80,8 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                     name="DateOfBirth"
                     onChange={handleChange}
                     value={values.DateOfBirth || ""}
-                    min="1918-01-01"
-                    max="2018-12-31"
+                    min="1961-01-01" 
+                    max="2002-01-01"
                   />
                 </div>
               </div>

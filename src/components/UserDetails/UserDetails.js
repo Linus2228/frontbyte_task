@@ -73,7 +73,7 @@ const UserDetail = () => {
       Surname: updatedUser.Surname,
       Nationality: updatedUser.Nationality,
       Rank: updatedUser.Rank,
-      Dateofbirth: updatedUser.Dateofbirth,
+      Dateofbirth: updatedUser.DateOfBirth,
       Address: updatedUser.Address
     };
     dispatch(updateUser(data, navigateToUsers));
@@ -89,9 +89,9 @@ const UserDetail = () => {
 
   if (isLoaderShow) return <h3>Loading...</h3>;
 
-  const { Rank, Dateofbirth, Nationality } = userDetails;
+  const { Rank, DateOfBirth, Nationality } = userDetails;
 
-  const dateOfBirth = handleDate(Dateofbirth);
+  const dateOfBirth = handleDate(DateOfBirth);
 
   const rankOptions = getRankOptions();
   const rankIndex = rankOptions.findIndex(rank => rank.value === Rank);
