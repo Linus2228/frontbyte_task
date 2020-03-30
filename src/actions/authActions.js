@@ -1,4 +1,10 @@
 import axios from "axios";
+
+import {
+  toastSuccess,
+  toastError,
+  toastInfo
+} from "../utils/toastNotifications";
 import {
   SET_USER,
   LOGIN_USER_START,
@@ -15,6 +21,7 @@ export const keepAlive = dispatch => {
   const token = localStorage.getItem("token");
   axios.put(`/session/KeepAlive/${token}`).catch(error => {
     if (error.response.data.ErrorCode === "InvalidSessionToken") {
+      toastError("Please log in")
       clearUserDataInLocalStorage();
       dispatch(removeUser());
       if (timer) {
@@ -51,10 +58,11 @@ export const userLogin = user => dispatch => {
       localStorage.setItem("userName", user.User);
       localStorage.setItem("companyName", user.Company);
       dispatch(setUser({ userName: user.User, companyName: user.Company }));
+      toastSuccess("Congrats on login!");
     })
     .catch(error => {
       dispatch(loginUserFinish());
-      // toast
+      toastError("Please try again");
     });
 };
 
@@ -89,6 +97,7 @@ export const logout = () => dispatch => {
   return axios
     .delete(`/session/logout/${token}`)
     .then(response => {
+      toastInfo("We'll miss you...");
       dispatch(logotUserFinish());
       clearUserDataInLocalStorage();
 
@@ -100,7 +109,11 @@ export const logout = () => dispatch => {
     })
     .catch(error => {
       dispatch(logotUserFinish());
-      // toast
-      console.log(error);
+      if (error.response.status === 400) {
+        dispatch(logout());
+        toastError(error.response.data.ErrorMessage);
+      } else {
+        toastError("Something went wrong");
+      }
     });
 };

@@ -10,7 +10,6 @@ export const useProtectRoute = arrayOfActions => {
   useLayoutEffect(() => {
     if (!isUser) {
       history.push("/");
-      alert("Please login");
     } else {
       if (arrayOfActions) {
         arrayOfActions.forEach(action => dispatch(action));

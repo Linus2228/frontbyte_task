@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { keepAliveStart, logout } from "./actions/authActions";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
@@ -24,6 +26,17 @@ const App = props => {
   return (
     <div>
       <Header isUser={isUser} handleLogout={handleLogout} />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnVisibilityChange
+        draggable
+        pauseOnHover
+      />
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/dashboard" component={Dashboard} />

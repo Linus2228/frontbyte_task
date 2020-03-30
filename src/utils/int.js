@@ -2,7 +2,7 @@ export const HomeInt = {
   eng: {
     greeting: name => `Welcome, ${name}!`,
     desc: "Your awesome app",
-    login: "Please login"
+    login: "Please log in"
   },
   pol: {
     greeting: name => `Powitanie, ${name}!`,

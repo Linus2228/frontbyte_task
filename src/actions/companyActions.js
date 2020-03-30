@@ -1,6 +1,11 @@
 import axios from "axios";
 import { logout } from "./authActions";
 import {
+  toastSuccess,
+  toastError,
+  toastInfo
+} from "../utils/toastNotifications";
+import {
   GET_SUMMARY_START,
   GET_SUMMARY_SUCCESS,
   GET_SUMMARY_FAILURE,
@@ -39,17 +44,17 @@ export const getSummary = () => dispatch => {
   dispatch(getSummaryStart());
   const token = localStorage.getItem("token");
   return axios
-    .get("/Data/GetSummary", { headers: { SessionToken: token } })
+    .get("/Data/GetSummary", { headers: { SessionToken: 2 } })
     .then(response => {
       dispatch(getSummarySuccess(response.data));
     })
     .catch(error => {
       if (error.response.status === 401) {
+        dispatch(getSummaryFailure(error.response.data));
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        dispatch(getSummaryFailure(error.response.data.ErrorMessage));
-        // toaster(error.response.data.ErrorMessage)
+        dispatch(getSummaryFailure("Something whent wrong"));
+        toastError("Something whent wrong");
       }
     });
 };
@@ -77,12 +82,11 @@ export const getUsers = () => dispatch => {
       dispatch(getUsersSuccess(response.data));
     })
     .catch(error => {
+      dispatch(getUsersFailure("Something whent wrong"));
       if (error.response.status === 401) {
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        dispatch(getUsersFailure(error.response.data.ErrorMessage));
-        // toaster(error.response.data.ErrorMessage)
+        toastError("Something whent wrong");
       }
     });
 };
@@ -110,12 +114,11 @@ export const getNationalities = () => dispatch => {
       dispatch(getNationalitiesSuccess(response.data));
     })
     .catch(error => {
+      dispatch(getNationalitiesFailure("Something whent wrong"));
       if (error.response.status === 401) {
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        dispatch(getNationalitiesFailure(error.response.data.ErrorMessage));
-        // toaster(error.response.data.ErrorMessage)
+        toastError("Something whent wrong");
       }
     });
 };
@@ -148,12 +151,11 @@ export const getUserDetails = userId => dispatch => {
       dispatch(getUserDetailsSuccess(response.data));
     })
     .catch(error => {
+      dispatch(getUserDetailsFailure("Something whent wrong"));
       if (error.response.status === 401) {
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        dispatch(getUserDetailsFailure(error.response.data.ErrorMessage));
-        // toaster(error.response.data.ErrorMessage)
+        toastError("Something whent wrong");
       }
     });
 };
@@ -171,24 +173,22 @@ export const updateUser = (user, callback) => dispatch => {
   const token = localStorage.getItem("token");
   dispatch(updateUserStart());
   return axios({
-    method: 'put',
+    method: "put",
     url: `/Data/UpdateUser/${user.Id}`,
     data: user,
     headers: { SessionToken: token }
   })
     .then(response => {
       dispatch(getUsers());
-      // toaster("You updated the user successfully")
+      toastSuccess("The user us updated!");
       callback();
     })
     .catch(error => {
       dispatch(updateUserFinish());
-      
       if (error.response.status === 401) {
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        // toaster(error.response.data.ErrorMessage)
+        toastError("Something went wrong");
       }
     });
 };
@@ -213,16 +213,15 @@ export const getRanks = () => dispatch => {
   return axios
     .get("/Data/ListRanks/", { headers: { SessionToken: token } })
     .then(response => {
-      sessionStorage.setItem( "ranks", JSON.stringify( response.data ) );
+      sessionStorage.setItem("ranks", JSON.stringify(response.data));
       dispatch(getRanksSuccess());
     })
     .catch(error => {
       dispatch(getRanksFailure());
       if (error.response.status === 401) {
         dispatch(logout());
-        // toaster("Please login again")
       } else {
-        // toaster(error.response.data.ErrorMessage)
+        toastError("Something whent wrong");
       }
     });
 };
