@@ -7,18 +7,24 @@ import {
   getNationalitiesHash
 } from "../../actions/company_actions";
 import UsersTable from "./UsersTable";
+import { UsersListInt } from "../../utils/int";
 
 const initialNationalitiesHash = {};
 
 const UsersList = () => {
   const [search, setSearch] = useState("");
   const fetchedUsers = useSelector(state => state.company.users);
-  const { data: nationalities } = useSelector(state => state.company.nationalities);
+  const { data: nationalities } = useSelector(
+    state => state.company.nationalities
+  );
   const isNationalities = nationalities.length !== 0;
   const isFetchedUsers = fetchedUsers.length !== 0;
   const nationalitiesHash = useSelector(
     state => state.company.nationalitiesHash
   );
+  const lang = useSelector(state => state.controls.lang.value);
+  const { title, searchTitle } = UsersListInt[lang];
+
   const dispatch = useDispatch();
   const shouldDisplay = fetchedUsers.length !== 0 && nationalities.length !== 0;
   const isNationalitiesHash = Object.keys(nationalitiesHash).length !== 0;
@@ -63,9 +69,9 @@ const UsersList = () => {
 
   return (
     <div>
-      <h1>Users list</h1>
+      <h1>{title}</h1>
       <label>
-        Search name:
+        {searchTitle}
         <input
           type="text"
           name="name"
@@ -73,7 +79,7 @@ const UsersList = () => {
           onChange={e => setSearch(e.target.value)}
         />
       </label>
-      <UsersTable users={users} search={search} />
+      <UsersTable users={users} search={search} lang={lang} />
     </div>
   );
 };

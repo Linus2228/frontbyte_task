@@ -22,5 +22,4 @@ export const GET_RANKS_START = "GET_RANKS_START";
 export const GET_RANKS_SUCCESS = "GET_RANKS_SUCCESS";
 export const GET_RANKS_FAILURE = "GET_RANKS_FAILURE";
 
-
-
+export const SET_LANGUAGE = "SET_LANGUAGE";

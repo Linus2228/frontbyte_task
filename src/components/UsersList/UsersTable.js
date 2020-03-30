@@ -16,7 +16,7 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
+import { UsersTableInt } from "../../utils/int";
 
 const useStyles1 = makeStyles(theme => ({
   root: {
@@ -25,14 +25,14 @@ const useStyles1 = makeStyles(theme => ({
   }
 }));
 
-const tableCells = [
-  { title: "Name", id: 0 },
-  { title: "Surname", id: 1 },
-  { title: "Nationality", id: 3 },
-  { title: "Edit User", id: 4 }
-];
+const generateTableCellsDecorator = (initialId, titles) => () =>
+  Object.values(titles).reduce((acc, item) => {
+    acc.push({ title: item, id: initialId });
+    initialId++;
+    return acc;
+  }, []);
 
-function TablePaginationActions(props) {
+const TablePaginationActions = props => {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -93,7 +93,7 @@ function TablePaginationActions(props) {
       </IconButton>
     </div>
   );
-}
+};
 
 const useStyles2 = makeStyles({
   table: {
@@ -102,15 +102,19 @@ const useStyles2 = makeStyles({
 });
 
 export const UsersTable = props => {
-  const { users } = props;
+  const { users, search, lang } = props;
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const history = useHistory();
 
+  const { tableCells } = UsersTableInt[lang];
+  const updatedTableCells = generateTableCellsDecorator(0, tableCells)();
+  console.log(updatedTableCells);
+
   useEffect(() => {
     setPage(0);
-  }, [props.search]);
+  }, [search]);
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
@@ -126,7 +130,7 @@ export const UsersTable = props => {
 
   const renderTableCells = () => (
     <>
-      {tableCells.map(cell => (
+      {updatedTableCells.map(cell => (
         <TableCell key={cell.id}>{cell.title}</TableCell>
       ))}
     </>

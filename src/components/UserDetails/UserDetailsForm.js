@@ -5,13 +5,21 @@ import { validateUserDetailsForm as validate } from "../../utils";
 
 import "bulma/css/bulma.css";
 
-const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
-  const { values, errors, handleChange, handleSelectChange, handleSubmit } = useForm(
-    submitUser,
-    validate,
-    data
-  );
-  
+const UserDetailsForm = ({
+  data,
+  submitUser,
+  rankIndex,
+  nationalityIndex,
+  wordingInt
+}) => {
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSelectChange,
+    handleSubmit
+  } = useForm(submitUser, validate, data);
+
   return (
     <div className="section is-fullheight">
       <div className="container">
@@ -19,7 +27,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
           <div className="box">
             <form onSubmit={handleSubmit} noValidate>
               <div className="field">
-                <label className="label">Name*</label>
+                <label className="label">{wordingInt.name}</label>
                 <div className="control">
                   <input
                     autoComplete="off"
@@ -36,7 +44,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Surname*</label>
+                <label className="label">{wordingInt.surname}</label>
                 <div className="control">
                   <input
                     className={`input ${errors.Surname && "is-danger"}`}
@@ -52,7 +60,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                 )}
               </div>
               <div className="field">
-                <label className="label">Nationality</label>
+                <label className="label">{wordingInt.nationality}</label>
                 <Select
                   options={values.nationalitiesOptions}
                   name="nationality"
@@ -62,7 +70,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                 />
               </div>
               <div className="field">
-                <label className="label">Rank</label>
+                <label className="label">{wordingInt.rank}</label>
                 <Select
                   options={values.rankOptions}
                   name="Rank"
@@ -72,7 +80,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                 />
               </div>
               <div className="field">
-                <label className="label">Birthday</label>
+                <label className="label">{wordingInt.birthday}</label>
                 <div className="control">
                   <input
                     className="input"
@@ -80,13 +88,13 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                     name="DateOfBirth"
                     onChange={handleChange}
                     value={values.DateOfBirth || ""}
-                    min="1961-01-01" 
+                    min="1961-01-01"
                     max="2002-01-01"
                   />
                 </div>
               </div>
               <div className="field">
-                <label className="label">Address</label>
+                <label className="label">{wordingInt.address}</label>
                 <div className="control">
                   <input
                     className="input"
@@ -101,7 +109,7 @@ const UserDetailsForm = ({ data, submitUser, rankIndex, nationalityIndex }) => {
                 type="submit"
                 className="button is-block is-info is-fullwidth"
               >
-                Update user
+                {wordingInt.updateUser}
               </button>
             </form>
           </div>

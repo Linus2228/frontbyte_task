@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useProtectRoute } from "../../hooks";
 import { getSummaryFetch } from "../../actions/company_actions";
+import { DashboardInt } from "../../utils/int";
 
 const Dashboard = () => {
   const summary = useSelector(state => state.company.summary);
+  const lang = useSelector(state => state.controls.lang.value);
+
+  const { trainings } = DashboardInt[lang];
   const isSummary = Object.keys(summary).length !== 0;
 
   useProtectRoute([getSummaryFetch()]);
@@ -31,8 +35,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
-      <h3>Trainings Line Chart</h3>
+      <h3>{trainings}</h3>
       {renderLineChart()}
     </div>
   );

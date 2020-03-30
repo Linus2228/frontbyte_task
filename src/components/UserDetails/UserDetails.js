@@ -10,6 +10,7 @@ import {
   getRanks
 } from "../../actions/company_actions";
 import { useProtectRoute } from "../../hooks";
+import { UserDetailsInt } from "../../utils/int";
 
 const handleDate = date => {
   const array = moment(date)
@@ -34,6 +35,8 @@ const UserDetails = () => {
   );
   const { loading: isRanksLoading } = useSelector(state => state.company.ranks);
   const ranks = JSON.parse(sessionStorage.getItem("ranks"));
+
+  const lang = useSelector(state => state.controls.lang.value);
 
   const isUserDetails = Object.keys(userDetails).length !== 0;
   const isNationalities = nationalities.length !== 0;
@@ -90,6 +93,7 @@ const UserDetails = () => {
   if (isLoaderShow) return <h3>Loading...</h3>;
 
   const { Rank, DateOfBirth, Nationality } = userDetails;
+  const wordingInt = UserDetailsInt[lang];
 
   const dateOfBirth = handleDate(DateOfBirth);
 
@@ -114,6 +118,7 @@ const UserDetails = () => {
       submitUser={submitUser}
       rankIndex={rankIndex}
       nationalityIndex={nationalityIndex}
+      wordingInt={wordingInt}
     />
   );
 };
