@@ -1,8 +1,12 @@
 import axios from "axios";
-import { logout } from "./userActions";
+import { logout } from "./authActions";
 import {
-  GET_SUMMARY,
-  GET_USERS,
+  GET_SUMMARY_START,
+  GET_SUMMARY_SUCCESS,
+  GET_SUMMARY_FAILURE,
+  GET_USERS_START,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAILURE,
   GET_NATIONALITIES_START,
   GET_NATIONALITIES_SUCCESS,
   GET_NATIONALITIES_FAILURE,
@@ -17,37 +21,69 @@ import {
   GET_RANKS_FAILURE
 } from "./types";
 
-export const getSummary = payload => ({
-  type: GET_SUMMARY,
+export const getSummaryStart = () => ({
+  type: GET_SUMMARY_START
+});
+
+export const getSummarySuccess = payload => ({
+  type: GET_SUMMARY_SUCCESS,
   payload
 });
 
-export const getSummaryFetch = () => dispatch => {
+export const getSummaryFailure = payload => ({
+  type: GET_SUMMARY_FAILURE,
+  payload
+});
+
+export const getSummary = () => dispatch => {
+  dispatch(getSummaryStart());
   const token = localStorage.getItem("token");
   return axios
     .get("/Data/GetSummary", { headers: { SessionToken: token } })
     .then(response => {
-      dispatch(getSummary(response.data));
+      dispatch(getSummarySuccess(response.data));
     })
     .catch(error => {
-      console.log(error);
+      if (error.response.status === 401) {
+        dispatch(logout());
+        // toaster("Please login again")
+      } else {
+        dispatch(getSummaryFailure(error.response.data.ErrorMessage));
+        // toaster(error.response.data.ErrorMessage)
+      }
     });
 };
 
-export const getUsers = payload => ({
-  type: GET_USERS,
+export const getUsersStart = () => ({
+  type: GET_USERS_START
+});
+
+export const getUsersSuccess = payload => ({
+  type: GET_USERS_SUCCESS,
   payload
 });
 
-export const getUsersFetch = () => dispatch => {
+export const getUsersFailure = payload => ({
+  type: GET_USERS_FAILURE,
+  payload
+});
+
+export const getUsers = () => dispatch => {
+  dispatch(getUsersStart());
   const token = localStorage.getItem("token");
   return axios
     .get("/Data/ListUsers", { headers: { SessionToken: token } })
     .then(response => {
-      dispatch(getUsers(response.data));
+      dispatch(getUsersSuccess(response.data));
     })
     .catch(error => {
-      console.log(error);
+      if (error.response.status === 401) {
+        dispatch(logout());
+        // toaster("Please login again")
+      } else {
+        dispatch(getUsersFailure(error.response.data.ErrorMessage));
+        // toaster(error.response.data.ErrorMessage)
+      }
     });
 };
 
@@ -141,7 +177,7 @@ export const updateUser = (user, callback) => dispatch => {
     headers: { SessionToken: token }
   })
     .then(response => {
-      dispatch(getUsersFetch());
+      dispatch(getUsers());
       // toaster("You updated the user successfully")
       callback();
     })

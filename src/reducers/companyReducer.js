@@ -1,6 +1,10 @@
 import {
-  GET_SUMMARY,
-  GET_USERS,
+  GET_SUMMARY_START,
+  GET_SUMMARY_SUCCESS,
+  GET_SUMMARY_FAILURE,
+  GET_USERS_START,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAILURE,
   GET_NATIONALITIES_START,
   GET_NATIONALITIES_SUCCESS,
   GET_NATIONALITIES_FAILURE,
@@ -16,8 +20,16 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  summary: {},
-  users: [],
+  summary: {
+    data: {},
+    loading: false,
+    error: null
+  },
+  users: {
+    data: [],
+    loading: false,
+    error: null
+  },
   nationalities: {
     data: [],
     loading: false,
@@ -39,10 +51,65 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_SUMMARY:
-      return { ...state, summary: action.payload };
-    case GET_USERS:
-      return { ...state, users: action.payload };
+    case GET_SUMMARY_START: {
+      return {
+        ...state,
+        summary: {
+          data: { ...state.summary.data },
+          loading: true,
+          error: null
+        }
+      };
+    }
+    case GET_SUMMARY_SUCCESS:
+      return {
+        ...state,
+        summary: {
+          data: action.payload,
+          loading: false,
+          error: null
+        }
+      };
+    case GET_SUMMARY_FAILURE:
+      return {
+        ...state,
+        summary: {
+          data: { ...state.summary.data },
+          loading: false,
+          error: action.payload
+        }
+      };
+    case GET_USERS_START: {
+      const users = state.users.data.map(item => ({ ...item }));
+      return {
+        ...state,
+        users: {
+          data: users,
+          loading: true,
+          error: null
+        }
+      };
+    }
+    case GET_USERS_SUCCESS:
+      return {
+        ...state,
+        users: {
+          data: action.payload,
+          loading: false,
+          error: null
+        }
+      };
+    case GET_USERS_FAILURE: {
+      const users = state.users.data.map(item => ({ ...item }));
+      return {
+        ...state,
+        users: {
+          data: users,
+          loading: false,
+          error: action.payload
+        }
+      };
+    }
     case GET_NATIONALITIES_START: {
       const nationalities = state.nationalities.data.map(item => ({ ...item }));
       return {

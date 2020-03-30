@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useProtectRoute } from "../../hooks";
 import {
-  getUsersFetch,
+  getUsers,
   getNationalities,
   getNationalitiesHash
 } from "../../actions/companyActions";
@@ -13,7 +13,7 @@ const initialNationalitiesHash = {};
 
 const UsersList = () => {
   const [search, setSearch] = useState("");
-  const fetchedUsers = useSelector(state => state.company.users);
+  const fetchedUsers = useSelector(state => state.company.users.data);
   const { data: nationalities } = useSelector(
     state => state.company.nationalities
   );
@@ -35,7 +35,7 @@ const UsersList = () => {
       actions.push(getNationalities());
     }
     if (!isFetchedUsers) {
-      actions.push(getUsersFetch());
+      actions.push(getUsers());
     }
     return actions;
   };

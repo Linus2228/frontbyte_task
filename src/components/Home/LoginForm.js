@@ -8,7 +8,7 @@ const initialUserData = {
 
 const Login = props => {
   const [userData, setUserData] = useState(initialUserData);
-  const { userLoginFetch } = props
+  const { userLogin } = props;
 
   const handleInputChange = event => {
     const { value, name } = event.target;
@@ -17,7 +17,7 @@ const Login = props => {
 
   const onSubmit = event => {
     event.preventDefault();
-    userLoginFetch(userData);
+    userLogin(userData);
   };
 
   return (

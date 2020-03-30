@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { keepAliveStart, logout } from "./actions/userActions";
+import { keepAliveStart, logout } from "./actions/authActions";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Dashboard from "./components/Dashboard/Dashboard";

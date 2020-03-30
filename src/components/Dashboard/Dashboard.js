@@ -2,17 +2,17 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useProtectRoute } from "../../hooks";
-import { getSummaryFetch } from "../../actions/companyActions";
+import { getSummary } from "../../actions/companyActions";
 import { DashboardInt } from "../../utils/int";
 
 const Dashboard = () => {
-  const summary = useSelector(state => state.company.summary);
+  const summary = useSelector(state => state.company.summary.data);
   const lang = useSelector(state => state.controls.lang.value);
 
   const { trainings } = DashboardInt[lang];
   const isSummary = Object.keys(summary).length !== 0;
 
-  useProtectRoute([getSummaryFetch()]);
+  useProtectRoute([getSummary()]);
 
   const renderLineChart = () => {
     if (!isSummary) return null;
