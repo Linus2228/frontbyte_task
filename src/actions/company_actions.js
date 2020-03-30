@@ -177,14 +177,15 @@ export const getRanks = () => dispatch => {
   return axios
     .get("/Data/ListRanks/", { headers: { SessionToken: token } })
     .then(response => {
-      dispatch(getRanksSuccess(response.data));
+      sessionStorage.setItem( "ranks", JSON.stringify( response.data ) );
+      dispatch(getRanksSuccess());
     })
     .catch(error => {
+      dispatch(getRanksFailure());
       if (error.response.status === 401) {
         dispatch(logout());
         // toaster("Please login again")
       } else {
-        dispatch(getRanksFailure(error.response.data.ErrorMessage));
         // toaster(error.response.data.ErrorMessage)
       }
     });

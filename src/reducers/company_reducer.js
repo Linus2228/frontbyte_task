@@ -33,9 +33,7 @@ const initialState = {
     isUserDetailsLoading: false
   },
   ranks: {
-    data: [],
-    loading: false,
-    error: null
+    loading: false
   }
 };
 
@@ -130,13 +128,10 @@ export default (state = initialState, action) => {
     case GET_NATIONALITIES_HASH:
       return { ...state, nationalitiesHash: action.payload };
     case GET_RANKS_START: {
-      const ranks = state.ranks.data.map(item => ({ ...item }));
       return {
         ...state,
         ranks: {
-          data: ranks,
-          loading: true,
-          error: null
+          loading: true
         }
       };
     }
@@ -144,19 +139,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ranks: {
-          data: action.payload,
-          loading: false,
-          error: null
+          loading: false
         }
       };
     case GET_RANKS_FAILURE: {
-      const ranks = state.ranks.data.map(item => ({ ...item }));
       return {
         ...state,
         ranks: {
-          data: ranks,
-          loading: false,
-          error: action.payload
+          loading: false
         }
       };
     }

@@ -21,23 +21,23 @@ const handleDate = date => {
   return array.join("-");
 };
 
-const UserDetail = () => {
+const UserDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
+
   const { data: userDetails, loading: isUserDetailsLoading } = useSelector(
     state => state.company.userDetails
   );
   const { data: nationalities, loading: isNationalitiesLoading } = useSelector(
     state => state.company.nationalities
   );
-  const { data: ranks, loading: isRanksLoading } = useSelector(
-    state => state.company.ranks
-  );
+  const { loading: isRanksLoading } = useSelector(state => state.company.ranks);
+  const ranks = JSON.parse(sessionStorage.getItem("ranks"));
 
   const isUserDetails = Object.keys(userDetails).length !== 0;
   const isNationalities = nationalities.length !== 0;
-  const isRanks = ranks.length !== 0;
+  const isRanks = ranks && ranks.length !== 0;
 
   const getActions = () => {
     const actions = [getUserDetails(id)];
@@ -118,4 +118,4 @@ const UserDetail = () => {
   );
 };
 
-export default UserDetail;
+export default UserDetails;
