@@ -1,6 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { toastInfo } from "../utils/toastNotifications"
 
 export const useProtectRoute = arrayOfActions => {
   const isUser = !!localStorage.getItem("token");
@@ -10,6 +11,7 @@ export const useProtectRoute = arrayOfActions => {
   useLayoutEffect(() => {
     if (!isUser) {
       history.push("/");
+      toastInfo("Log in first")
     } else {
       if (arrayOfActions) {
         arrayOfActions.forEach(action => dispatch(action));

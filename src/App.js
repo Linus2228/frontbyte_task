@@ -18,7 +18,7 @@ const App = props => {
 
   useEffect(() => {
     keepAliveStart(dispatch);
-  }, []);
+  }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(logout("See you soon!"));
