@@ -4,7 +4,7 @@ import { userLogin } from "../../actions/authActions";
 import LoginForm from "./LoginForm";
 import { HomeInt } from "../../utils/int";
 
-const Home = props => {
+const Home = () => {
   const userName = useSelector(state => state.auth.currentUser.userName);
   const lang = useSelector(state => state.controls.lang.value);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Home = props => {
           <h1>{login}</h1>
           <LoginForm
             loginFormInt={loginFormInt}
-            userLogin={userInfo => {
+            loginUser={userInfo => {
               dispatch(userLogin(userInfo));
             }}
           />

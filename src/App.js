@@ -12,8 +12,8 @@ import NotFound from "./components/NotFound/NotFound";
 
 import "react-toastify/dist/ReactToastify.css";
 
-const App = props => {
-  const isUser = useSelector(state => state.auth.currentUser.userName);
+const App = () => {
+  const isUser = !!useSelector(state => state.auth.currentUser.userName);
   const dispatch = useDispatch();
 
   useEffect(() => {

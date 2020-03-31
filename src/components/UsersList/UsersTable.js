@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -98,8 +99,21 @@ const TablePaginationActions = props => {
 const useStyles2 = makeStyles({
   table: {
     minWidth: 500
+  },
+  tableContainer: {
+    marginTop: 25
   }
 });
+
+const StyledTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  body: {
+    fontSize: 14
+  }
+}))(TableCell);
 
 export const UsersTable = props => {
   const { users, search, lang } = props;
@@ -130,13 +144,13 @@ export const UsersTable = props => {
   const renderTableCells = () => (
     <>
       {updatedTableCells.map(cell => (
-        <TableCell key={cell.id}>{cell.title}</TableCell>
+        <StyledTableCell key={cell.id}>{cell.title}</StyledTableCell>
       ))}
     </>
   );
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className={classes.tableContainer} component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
           <TableRow>{renderTableCells()}</TableRow>
@@ -193,6 +207,12 @@ export const UsersTable = props => {
       </Table>
     </TableContainer>
   );
+};
+
+UsersTable.propTypes = {
+  users: PropTypes.array.isRequired,
+  search: PropTypes.string,
+  lang: PropTypes.string.isRequired
 };
 
 export default UsersTable;

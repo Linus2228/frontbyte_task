@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
@@ -42,5 +43,10 @@ const Header = ({ isUser, handleLogout }) => {
     </div>
   );
 };
+
+Header.propTypes = {
+  isUser: PropTypes.bool,
+  handleLogout: PropTypes.func.isRequired,
+}
 
 export default Header;

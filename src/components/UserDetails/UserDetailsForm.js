@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Select from "react-select";
 import { useForm } from "../../hooks";
 import { validateUserDetailsForm as validate } from "../../utils/validation";
@@ -117,6 +118,14 @@ const UserDetailsForm = ({
       </div>
     </div>
   );
+};
+
+UserDetailsForm.propTypes = {
+  data: PropTypes.object.isRequired,
+  submitUser: PropTypes.func.isRequired,
+  rankIndex: PropTypes.number.isRequired,
+  nationalityIndex: PropTypes.number.isRequired,
+  wordingInt: PropTypes.object.isRequired
 };
 
 export default UserDetailsForm;

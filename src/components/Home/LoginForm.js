@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { useForm } from "../../hooks";
 import { validateLoginForm as validate } from "../../utils/validation";
 
@@ -9,7 +10,7 @@ const initialUserData = {
 };
 
 const Login = ({
-  userLogin,
+  loginUser,
   loginFormInt
 }) => {
   const {
@@ -17,7 +18,7 @@ const Login = ({
     errors,
     handleChange,
     handleSubmit
-  } = useForm(userLogin, validate, initialUserData);
+  } = useForm(loginUser, validate, initialUserData);
 
   return (
     <div className="section is-fullheight">
@@ -89,5 +90,10 @@ const Login = ({
     </div>
   );
 };
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  loginFormInt: PropTypes.object.isRequired,
+}
 
 export default Login;

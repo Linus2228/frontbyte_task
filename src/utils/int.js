@@ -72,7 +72,7 @@ export const UsersTableInt = {
       name: "Nazwa",
       surname: "Nazwisko",
       nationality: "Narodowosc",
-      editUser: "Edytuj uzytkownika"
+      editUser: "Edytuj"
     }
   }
 };
