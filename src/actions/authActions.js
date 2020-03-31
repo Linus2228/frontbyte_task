@@ -63,7 +63,11 @@ export const userLogin = user => dispatch => {
     })
     .catch(error => {
       dispatch(loginUserFinish());
-      toastError("Please try again");
+      if (error.response.status === 400) {
+        toastError(error.response.data.ErrorMessage);
+      } else {
+        toastError("Something went wrong. Please try again");
+      }
     });
 };
 

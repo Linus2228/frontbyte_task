@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "../../hooks";
+import { validateLoginForm as validate } from "../../utils";
 
 const initialUserData = {
   User: "Admin",
@@ -6,48 +8,85 @@ const initialUserData = {
   Company: "DemoCompany"
 };
 
-const Login = props => {
-  const [userData, setUserData] = useState(initialUserData);
-  const { userLogin } = props;
-
-  const handleInputChange = event => {
-    const { value, name } = event.target;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const onSubmit = event => {
-    event.preventDefault();
-    userLogin(userData);
-  };
+const Login = ({
+  userLogin,
+  loginFormInt
+}) => {
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit
+  } = useForm(userLogin, validate, initialUserData);
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type="input"
-        name="Company"
-        placeholder="Enter company name"
-        value={userData.Company}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="input"
-        name="User"
-        placeholder="Enter user name"
-        value={userData.User}
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="password"
-        name="Password"
-        placeholder="Enter password"
-        value={userData.Password}
-        onChange={handleInputChange}
-        required
-      />
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="section is-fullheight">
+      <div className="container">
+        <div className="column is-4 is-offset-3">
+          <div className="box">
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="field">
+                <label className="label">{loginFormInt.name}</label>
+                <div className="control">
+                  <input
+                    autoComplete="on"
+                    className={`input ${errors.User && "is-danger"}`}
+                    type="text"
+                    name="User"
+                    onChange={handleChange}
+                    value={values.User || ""}
+                    required
+                  />
+                  {errors.User && (
+                    <p className="help is-danger">{errors.User}</p>
+                  )}
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">{loginFormInt.company}</label>
+                <div className="control">
+                  <input
+                    autoComplete="on"
+                    className={`input ${errors.Company && "is-danger"}`}
+                    type="text"
+                    name="Company"
+                    onChange={handleChange}
+                    value={values.Company || ""}
+                    required
+                  />
+                  {errors.Company && (
+                    <p className="help is-danger">{errors.Company}</p>
+                  )}
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">{loginFormInt.password}</label>
+                <div className="control">
+                  <input
+                    autoComplete="on"
+                    className={`input ${errors.Password && "is-danger"}`}
+                    type="password"
+                    name="Password"
+                    onChange={handleChange}
+                    value={values.Password || ""}
+                    required
+                  />
+                  {errors.Password && (
+                    <p className="help is-danger">{errors.Password}</p>
+                  )}
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="button is-block is-info is-fullwidth"
+              >
+                {loginFormInt.login}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

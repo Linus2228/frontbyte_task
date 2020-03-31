@@ -2,12 +2,24 @@ export const HomeInt = {
   eng: {
     greeting: name => `Welcome, ${name}!`,
     desc: "Your awesome app",
-    login: "Please log in"
+    login: "Please log in",
+    loginForm: {
+      name: "Name",
+      company: "Company",
+      password: "Password",
+      login: "Log in"
+    }
   },
   pol: {
     greeting: name => `Powitanie, ${name}!`,
     desc: "Twoja niesamowita aplikacja",
-    login: "Prosze sie zalogowac"
+    login: "Prosze sie zalogowac",
+    loginForm: {
+      name: "Nazwa",
+      company: "Firma",
+      password: "Haslo",
+      login: "Zalogowac"
+    }
   }
 };
 
@@ -83,5 +95,5 @@ export const UserDetailsInt = {
     birthday: "Urodziny",
     address: "Adres",
     updateUser: "Zaktualizuj uzytkownika"
-  },
+  }
 };

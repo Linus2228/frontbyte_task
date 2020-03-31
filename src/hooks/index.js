@@ -18,7 +18,7 @@ export const useProtectRoute = arrayOfActions => {
   }, [isUser]);
 };
 
-export const useForm = (callback, validate, initialValues) => {
+export const useForm = (callback, validate, initialValues = {}) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,7 +48,7 @@ export const useForm = (callback, validate, initialValues) => {
       ...values,
       [title]: value
     }));
-  }
+  };
 
   return {
     handleChange,

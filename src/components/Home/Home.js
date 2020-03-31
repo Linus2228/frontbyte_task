@@ -9,7 +9,7 @@ const Home = props => {
   const lang = useSelector(state => state.controls.lang.value);
   const dispatch = useDispatch();
 
-  const { greeting, desc, login } = HomeInt[lang];
+  const { greeting, desc, login, loginForm: loginFormInt } = HomeInt[lang];
 
   return (
     <div>
@@ -20,6 +20,7 @@ const Home = props => {
           <h1>{desc}</h1>
           <h1>{login}</h1>
           <LoginForm
+            loginFormInt={loginFormInt}
             userLogin={userInfo => {
               dispatch(userLogin(userInfo));
             }}
