@@ -5,6 +5,7 @@ import {
   toastError,
   toastInfo
 } from "../utils/toastNotifications";
+import { EXPIRED_SESSION_MESSAGE } from "../constants";
 import {
   SET_USER,
   LOGIN_USER_START,
@@ -91,13 +92,13 @@ export const logotUserFinish = () => ({
   type: LOGOUT_USER_FINISH
 });
 
-export const logout = () => dispatch => {
+export const logout = message => dispatch => {
   const token = localStorage.getItem("token");
   dispatch(logoutUserStart());
   return axios
     .delete(`/session/logout/${token}`)
     .then(response => {
-      toastInfo("We'll miss you...");
+      toastInfo(message);
       dispatch(logotUserFinish());
       clearUserDataInLocalStorage();
 
@@ -110,7 +111,7 @@ export const logout = () => dispatch => {
     .catch(error => {
       dispatch(logotUserFinish());
       if (error.response.status === 400) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
         toastError(error.response.data.ErrorMessage);
       } else {
         toastError("Something went wrong");

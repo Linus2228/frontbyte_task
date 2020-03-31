@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import { keepAliveStart, logout } from "./actions/authActions";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
@@ -10,6 +9,8 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import UsersList from "./components/UsersList/UsersList";
 import UserDetails from "./components/UserDetails/UserDetails";
 import NotFound from "./components/NotFound/NotFound";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const App = props => {
   const isUser = useSelector(state => state.auth.currentUser.userName);
@@ -20,7 +21,7 @@ const App = props => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout("See you soon!"));
   };
 
   return (

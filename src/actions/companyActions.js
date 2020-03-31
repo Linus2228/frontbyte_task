@@ -1,10 +1,7 @@
 import axios from "axios";
 import { logout } from "./authActions";
-import {
-  toastSuccess,
-  toastError,
-  toastInfo
-} from "../utils/toastNotifications";
+import { toastSuccess, toastError } from "../utils/toastNotifications";
+import { EXPIRED_SESSION_MESSAGE } from "../constants";
 import {
   GET_SUMMARY_START,
   GET_SUMMARY_SUCCESS,
@@ -44,14 +41,14 @@ export const getSummary = () => dispatch => {
   dispatch(getSummaryStart());
   const token = localStorage.getItem("token");
   return axios
-    .get("/Data/GetSummary", { headers: { SessionToken: 2 } })
+    .get("/Data/GetSummary", { headers: { SessionToken: token } })
     .then(response => {
       dispatch(getSummarySuccess(response.data));
     })
     .catch(error => {
       if (error.response.status === 401) {
         dispatch(getSummaryFailure(error.response.data));
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         dispatch(getSummaryFailure("Something whent wrong"));
         toastError("Something whent wrong");
@@ -84,7 +81,7 @@ export const getUsers = () => dispatch => {
     .catch(error => {
       dispatch(getUsersFailure("Something whent wrong"));
       if (error.response.status === 401) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         toastError("Something whent wrong");
       }
@@ -116,7 +113,7 @@ export const getNationalities = () => dispatch => {
     .catch(error => {
       dispatch(getNationalitiesFailure("Something whent wrong"));
       if (error.response.status === 401) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         toastError("Something whent wrong");
       }
@@ -153,7 +150,7 @@ export const getUserDetails = userId => dispatch => {
     .catch(error => {
       dispatch(getUserDetailsFailure("Something whent wrong"));
       if (error.response.status === 401) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         toastError("Something whent wrong");
       }
@@ -186,7 +183,7 @@ export const updateUser = (user, callback) => dispatch => {
     .catch(error => {
       dispatch(updateUserFinish());
       if (error.response.status === 401) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         toastError("Something went wrong");
       }
@@ -219,7 +216,7 @@ export const getRanks = () => dispatch => {
     .catch(error => {
       dispatch(getRanksFailure());
       if (error.response.status === 401) {
-        dispatch(logout());
+        dispatch(logout(EXPIRED_SESSION_MESSAGE));
       } else {
         toastError("Something whent wrong");
       }
