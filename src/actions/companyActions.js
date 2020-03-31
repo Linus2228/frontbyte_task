@@ -2,6 +2,7 @@ import axios from "axios";
 import { logout } from "./authActions";
 import { toastSuccess, toastError } from "../utils/toastNotifications";
 import { EXPIRED_SESSION_MESSAGE } from "../constants";
+import { getDataRequest } from "../utils/helpers";
 import {
   GET_SUMMARY_START,
   GET_SUMMARY_SUCCESS,
@@ -40,8 +41,7 @@ export const getSummaryFailure = payload => ({
 export const getSummary = () => dispatch => {
   dispatch(getSummaryStart());
   const token = localStorage.getItem("token");
-  return axios
-    .get("/Data/GetSummary", { headers: { SessionToken: token } })
+  getDataRequest("GetSummary", token)
     .then(response => {
       dispatch(getSummarySuccess(response.data));
     })
@@ -73,8 +73,7 @@ export const getUsersFailure = payload => ({
 export const getUsers = () => dispatch => {
   dispatch(getUsersStart());
   const token = localStorage.getItem("token");
-  return axios
-    .get("/Data/ListUsers", { headers: { SessionToken: token } })
+  getDataRequest("ListUsers", token)
     .then(response => {
       dispatch(getUsersSuccess(response.data));
     })
@@ -105,8 +104,7 @@ export const getNationalitiesFailure = payload => ({
 export const getNationalities = () => dispatch => {
   const token = localStorage.getItem("token");
   dispatch(getNationalitiesStart());
-  return axios
-    .get("/Data/ListNationalities", { headers: { SessionToken: token } })
+  getDataRequest("ListNationalities", token)
     .then(response => {
       dispatch(getNationalitiesSuccess(response.data));
     })
@@ -142,8 +140,7 @@ export const getUserDetailsFailure = payload => ({
 export const getUserDetails = userId => dispatch => {
   const token = localStorage.getItem("token");
   dispatch(getUserDetailsStart());
-  return axios
-    .get(`/Data/GetUser/${userId}`, { headers: { SessionToken: token } })
+  getDataRequest(`GetUser/${userId}`, token)
     .then(response => {
       dispatch(getUserDetailsSuccess(response.data));
     })
@@ -207,8 +204,7 @@ export const getRanksFailure = payload => ({
 export const getRanks = () => dispatch => {
   const token = localStorage.getItem("token");
   dispatch(getRanksStart());
-  return axios
-    .get("/Data/ListRanks/", { headers: { SessionToken: token } })
+  getDataRequest("ListRanks", token)
     .then(response => {
       sessionStorage.setItem("ranks", JSON.stringify(response.data));
       dispatch(getRanksSuccess());

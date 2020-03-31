@@ -14,7 +14,7 @@ import {
   LOGOUT_USER_FINISH,
   REMOVE_USER
 } from "./types";
-import { clearUserDataInLocalStorage } from "../utils";
+import { clearUserDataInLocalStorage } from "../utils/validation";
 
 let timer = null;
 
@@ -22,7 +22,7 @@ export const keepAlive = dispatch => {
   const token = localStorage.getItem("token");
   axios.put(`/session/KeepAlive/${token}`).catch(error => {
     if (error.response.data.ErrorCode === "InvalidSessionToken") {
-      toastError("Please log in")
+      toastError("Please log in");
       clearUserDataInLocalStorage();
       dispatch(removeUser());
       if (timer) {

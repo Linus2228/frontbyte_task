@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "../../hooks";
-import { validateLoginForm as validate } from "../../utils";
+import { validateLoginForm as validate } from "../../utils/validation";
 
 const initialUserData = {
   User: "Admin",

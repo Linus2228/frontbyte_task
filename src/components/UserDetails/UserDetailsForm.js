@@ -1,7 +1,7 @@
 import React from "react";
 import Select from "react-select";
 import { useForm } from "../../hooks";
-import { validateUserDetailsForm as validate } from "../../utils";
+import { validateUserDetailsForm as validate } from "../../utils/validation";
 
 import "bulma/css/bulma.css";
 
