@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import moment from "moment";
 import UserDetailsForm from "./UserDetailsForm";
+import { CircularLoader as Loader } from "../Loaders";
 import {
   getUserDetails,
   updateUser,
@@ -90,7 +91,7 @@ const UserDetails = () => {
     !isRanks ||
     isRanksLoading;
 
-  if (isLoaderShow) return <h3>Loading...</h3>;
+  if (isLoaderShow) return <Loader />;
 
   const { Rank, DateOfBirth, Nationality } = userDetails;
   const wordingInt = UserDetailsInt[lang];

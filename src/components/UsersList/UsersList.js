@@ -6,6 +6,7 @@ import {
   getNationalities,
   getNationalitiesHash
 } from "../../actions/companyActions";
+import { CircularLoader as Loader } from "../Loaders";
 import UsersTable from "./UsersTable";
 import { UsersListInt } from "../../utils/int";
 
@@ -13,8 +14,10 @@ const initialNationalitiesHash = {};
 
 const UsersList = () => {
   const [search, setSearch] = useState("");
-  const fetchedUsers = useSelector(state => state.company.users.data);
-  const { data: nationalities } = useSelector(
+  const { data: fetchedUsers, loading: isUsersLoading } = useSelector(
+    state => state.company.users
+  );
+  const { data: nationalities, loading: isNationalitiesLoading } = useSelector(
     state => state.company.nationalities
   );
   const isNationalities = nationalities.length !== 0;
@@ -26,7 +29,12 @@ const UsersList = () => {
   const { title, searchTitle } = UsersListInt[lang];
 
   const dispatch = useDispatch();
-  const shouldDisplay = fetchedUsers.length !== 0 && nationalities.length !== 0;
+  const isLoading =
+    fetchedUsers.length === 0 ||
+    nationalities.length === 0 ||
+    isUsersLoading ||
+    isNationalitiesLoading;
+
   const isNationalitiesHash = Object.keys(nationalitiesHash).length !== 0;
 
   const getActions = () => {
@@ -42,7 +50,7 @@ const UsersList = () => {
 
   useProtectRoute(getActions());
 
-  if (!shouldDisplay) return <h3>No users to display</h3>;
+  if (isLoading) return <Loader />;
 
   const getNationalityObject = code => {
     const nationalityObject = nationalities.find(item => item.Id === code);

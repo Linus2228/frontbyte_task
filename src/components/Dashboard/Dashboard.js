@@ -1,12 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { CircularLoader as Loader } from "../Loaders";
 import { useProtectRoute } from "../../hooks";
 import { getSummary } from "../../actions/companyActions";
 import { DashboardInt } from "../../utils/int";
 
 const Dashboard = () => {
-  const summary = useSelector(state => state.company.summary.data);
+  const {data: summary, loading: isSummaryLoading} = useSelector(state => state.company.summary);
   const lang = useSelector(state => state.controls.lang.value);
 
   const { trainings } = DashboardInt[lang];
@@ -15,7 +16,7 @@ const Dashboard = () => {
   useProtectRoute([getSummary()]);
 
   const renderLineChart = () => {
-    if (!isSummary) return null;
+    if (!isSummary || isSummaryLoading) return <Loader />;
 
     const data = summary.Trainings.map(item => ({
       name: item.Name,
