@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import { useForm } from "../../hooks";
-import { validateUserDetailsForm as validate } from "../../utils/validation";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Select from 'react-select'
+import { useForm } from '../../hooks'
+import { validateUserDetailsForm as validate } from '../../utils/validation'
 
-import "bulma/css/bulma.css";
+import 'bulma/css/bulma.css'
 
 const UserDetailsForm = ({
   data,
@@ -19,7 +19,7 @@ const UserDetailsForm = ({
     handleChange,
     handleSelectChange,
     handleSubmit
-  } = useForm(submitUser, validate, data);
+  } = useForm(submitUser, validate, data)
 
   return (
     <div className="section is-fullheight">
@@ -32,11 +32,11 @@ const UserDetailsForm = ({
                 <div className="control">
                   <input
                     autoComplete="off"
-                    className={`input ${errors.Firstname && "is-danger"}`}
+                    className={`input ${errors.Firstname && 'is-danger'}`}
                     type="text"
                     name="Firstname"
                     onChange={handleChange}
-                    value={values.Firstname || ""}
+                    value={values.Firstname || ''}
                     required
                   />
                   {errors.Firstname && (
@@ -48,11 +48,11 @@ const UserDetailsForm = ({
                 <label className="label">{wordingInt.surname}</label>
                 <div className="control">
                   <input
-                    className={`input ${errors.Surname && "is-danger"}`}
+                    className={`input ${errors.Surname && 'is-danger'}`}
                     type="text"
                     name="Surname"
                     onChange={handleChange}
-                    value={values.Surname || ""}
+                    value={values.Surname || ''}
                     required
                   />
                 </div>
@@ -65,7 +65,7 @@ const UserDetailsForm = ({
                 <Select
                   options={values.nationalitiesOptions}
                   name="nationality"
-                  onChange={option => handleSelectChange(option, "Nationality")}
+                  onChange={option => handleSelectChange(option, 'Nationality')}
                   isSearchable={true}
                   defaultValue={values.nationalitiesOptions[nationalityIndex]}
                 />
@@ -75,7 +75,7 @@ const UserDetailsForm = ({
                 <Select
                   options={values.rankOptions}
                   name="Rank"
-                  onChange={option => handleSelectChange(option, "Rank")}
+                  onChange={option => handleSelectChange(option, 'Rank')}
                   isSearchable={true}
                   defaultValue={values.rankOptions[rankIndex]}
                 />
@@ -88,7 +88,7 @@ const UserDetailsForm = ({
                     type="date"
                     name="DateOfBirth"
                     onChange={handleChange}
-                    value={values.DateOfBirth || ""}
+                    value={values.DateOfBirth || ''}
                     min="1961-01-01"
                     max="2002-01-01"
                   />
@@ -102,7 +102,7 @@ const UserDetailsForm = ({
                     type="address"
                     name="Address"
                     onChange={handleChange}
-                    value={values.Address || ""}
+                    value={values.Address || ''}
                   />
                 </div>
               </div>
@@ -117,8 +117,8 @@ const UserDetailsForm = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 UserDetailsForm.propTypes = {
   data: PropTypes.object.isRequired,
@@ -126,6 +126,6 @@ UserDetailsForm.propTypes = {
   rankIndex: PropTypes.number.isRequired,
   nationalityIndex: PropTypes.number.isRequired,
   wordingInt: PropTypes.object.isRequired
-};
+}
 
-export default UserDetailsForm;
+export default UserDetailsForm

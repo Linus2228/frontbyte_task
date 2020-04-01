@@ -1,16 +1,16 @@
-import { SET_LANGUAGE } from "../actions/types";
+import { SET_LANGUAGE } from '../actions/types'
 
 const initialState = {
   lang: {
-    value: "eng"
+    value: 'eng'
   }
-};
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_LANGUAGE:
-      return { ...state, lang: { value: action.payload } };
+      return { ...state, lang: { value: action.payload } }
     default:
-      return state;
+      return state
   }
-};
+}

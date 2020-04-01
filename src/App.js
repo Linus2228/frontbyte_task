@@ -1,28 +1,28 @@
-import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { keepAliveStart, logout } from "./actions/authActions";
-import Home from "./components/Home/Home";
-import Header from "./components/Header/Header";
-import Dashboard from "./components/Dashboard/Dashboard";
-import UsersList from "./components/UsersList/UsersList";
-import UserDetails from "./components/UserDetails/UserDetails";
-import NotFound from "./components/NotFound/NotFound";
+import React, { useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+import { keepAliveStart, logout } from './actions/authActions'
+import Home from './components/Home/Home'
+import Header from './components/Header/Header'
+import Dashboard from './components/Dashboard/Dashboard'
+import UsersList from './components/UsersList/UsersList'
+import UserDetails from './components/UserDetails/UserDetails'
+import NotFound from './components/NotFound/NotFound'
 
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
-  const isUser = !!useSelector(state => state.auth.currentUser.userName);
-  const dispatch = useDispatch();
+  const isUser = !!useSelector(state => state.auth.currentUser.userName)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    keepAliveStart(dispatch);
-  }, [dispatch]);
+    keepAliveStart(dispatch)
+  }, [dispatch])
 
   const handleLogout = () => {
-    dispatch(logout("See you soon!"));
-  };
+    dispatch(logout('See you soon!'))
+  }
 
   return (
     <div>
@@ -46,7 +46,7 @@ const App = () => {
         <Route component={NotFound} />
       </Switch>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

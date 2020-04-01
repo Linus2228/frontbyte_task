@@ -1,58 +1,58 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { makeStyles, useTheme, withStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableHead from "@material-ui/core/TableHead";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import Button from "@material-ui/core/Button";
-import { UsersTableInt } from "../../utils/int";
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { makeStyles, useTheme, withStyles } from '@material-ui/core/styles'
+import { useHistory } from 'react-router-dom'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableHead from '@material-ui/core/TableHead'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableFooter from '@material-ui/core/TableFooter'
+import TablePagination from '@material-ui/core/TablePagination'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
+import IconButton from '@material-ui/core/IconButton'
+import FirstPageIcon from '@material-ui/icons/FirstPage'
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import LastPageIcon from '@material-ui/icons/LastPage'
+import Button from '@material-ui/core/Button'
+import { UsersTableInt } from '../../utils/int'
 
 const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     marginLeft: theme.spacing(2.5)
   }
-}));
+}))
 
 const generateTableCellsDecorator = (initialId, titles) => () =>
   Object.values(titles).reduce((acc, item) => {
-    acc.push({ title: item, id: initialId });
-    initialId++;
-    return acc;
-  }, []);
+    acc.push({ title: item, id: initialId })
+    initialId++
+    return acc
+  }, [])
 
 const TablePaginationActions = props => {
-  const classes = useStyles1();
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
+  const classes = useStyles1()
+  const theme = useTheme()
+  const { count, page, rowsPerPage, onChangePage } = props
 
   const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
+    onChangePage(event, 0)
+  }
 
   const handleBackButtonClick = event => {
-    onChangePage(event, page - 1);
-  };
+    onChangePage(event, page - 1)
+  }
 
   const handleNextButtonClick = event => {
-    onChangePage(event, page + 1);
-  };
+    onChangePage(event, page + 1)
+  }
 
   const handleLastPageButtonClick = event => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
+    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
+  }
 
   return (
     <div className={classes.root}>
@@ -61,14 +61,14 @@ const TablePaginationActions = props => {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
       <IconButton
         onClick={handleBackButtonClick}
         disabled={page === 0}
         aria-label="previous page"
       >
-        {theme.direction === "rtl" ? (
+        {theme.direction === 'rtl' ? (
           <KeyboardArrowRight />
         ) : (
           <KeyboardArrowLeft />
@@ -79,7 +79,7 @@ const TablePaginationActions = props => {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="next page"
       >
-        {theme.direction === "rtl" ? (
+        {theme.direction === 'rtl' ? (
           <KeyboardArrowLeft />
         ) : (
           <KeyboardArrowRight />
@@ -90,11 +90,11 @@ const TablePaginationActions = props => {
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
     </div>
-  );
-};
+  )
+}
 
 const useStyles2 = makeStyles({
   table: {
@@ -103,7 +103,7 @@ const useStyles2 = makeStyles({
   tableContainer: {
     marginTop: 25
   }
-});
+})
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -113,33 +113,33 @@ const StyledTableCell = withStyles(theme => ({
   body: {
     fontSize: 14
   }
-}))(TableCell);
+}))(TableCell)
 
 export const UsersTable = props => {
-  const { users, search, lang } = props;
-  const classes = useStyles2();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const history = useHistory();
+  const { users, search, lang } = props
+  const classes = useStyles2()
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const history = useHistory()
 
-  const { tableCells } = UsersTableInt[lang];
-  const updatedTableCells = generateTableCellsDecorator(0, tableCells)();
+  const { tableCells } = UsersTableInt[lang]
+  const updatedTableCells = generateTableCellsDecorator(0, tableCells)()
 
   useEffect(() => {
-    setPage(0);
-  }, [search]);
+    setPage(0)
+  }, [search])
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, users.length - page * rowsPerPage)
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   const renderTableCells = () => (
     <>
@@ -147,7 +147,7 @@ export const UsersTable = props => {
         <StyledTableCell key={cell.id}>{cell.title}</StyledTableCell>
       ))}
     </>
-  );
+  )
 
   return (
     <TableContainer className={classes.tableContainer} component={Paper}>
@@ -171,7 +171,7 @@ export const UsersTable = props => {
                   variant="contained"
                   color="primary"
                   onClick={() => {
-                    history.push(`/users/${user.Id}`);
+                    history.push(`/users/${user.Id}`)
                   }}
                 >
                   Edit
@@ -189,13 +189,13 @@ export const UsersTable = props => {
         <TableFooter align="left">
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
               count={users.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
+                inputProps: { 'aria-label': 'rows per page' },
                 native: true
               }}
               onChangePage={handleChangePage}
@@ -206,13 +206,13 @@ export const UsersTable = props => {
         </TableFooter>
       </Table>
     </TableContainer>
-  );
-};
+  )
+}
 
 UsersTable.propTypes = {
   users: PropTypes.array.isRequired,
   search: PropTypes.string,
   lang: PropTypes.string.isRequired
-};
+}
 
-export default UsersTable;
+export default UsersTable

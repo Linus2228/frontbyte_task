@@ -17,7 +17,7 @@ import {
   GET_RANKS_FAILURE,
   UPDATE_USER_START,
   UPDATE_USER_FINISH
-} from "../actions/types";
+} from '../actions/types'
 
 const initialState = {
   summary: {
@@ -47,7 +47,7 @@ const initialState = {
   ranks: {
     loading: false
   }
-};
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -59,7 +59,7 @@ export default (state = initialState, action) => {
           loading: true,
           error: null
         }
-      };
+      }
     }
     case GET_SUMMARY_SUCCESS:
       return {
@@ -69,7 +69,7 @@ export default (state = initialState, action) => {
           loading: false,
           error: null
         }
-      };
+      }
     case GET_SUMMARY_FAILURE:
       return {
         ...state,
@@ -78,9 +78,9 @@ export default (state = initialState, action) => {
           loading: false,
           error: action.payload
         }
-      };
+      }
     case GET_USERS_START: {
-      const users = state.users.data.map(item => ({ ...item }));
+      const users = state.users.data.map(item => ({ ...item }))
       return {
         ...state,
         users: {
@@ -88,7 +88,7 @@ export default (state = initialState, action) => {
           loading: true,
           error: null
         }
-      };
+      }
     }
     case GET_USERS_SUCCESS:
       return {
@@ -98,9 +98,9 @@ export default (state = initialState, action) => {
           loading: false,
           error: null
         }
-      };
+      }
     case GET_USERS_FAILURE: {
-      const users = state.users.data.map(item => ({ ...item }));
+      const users = state.users.data.map(item => ({ ...item }))
       return {
         ...state,
         users: {
@@ -108,10 +108,10 @@ export default (state = initialState, action) => {
           loading: false,
           error: action.payload
         }
-      };
+      }
     }
     case GET_NATIONALITIES_START: {
-      const nationalities = state.nationalities.data.map(item => ({ ...item }));
+      const nationalities = state.nationalities.data.map(item => ({ ...item }))
       return {
         ...state,
         nationalities: {
@@ -119,7 +119,7 @@ export default (state = initialState, action) => {
           loading: true,
           error: null
         }
-      };
+      }
     }
     case GET_NATIONALITIES_SUCCESS:
       return {
@@ -130,9 +130,9 @@ export default (state = initialState, action) => {
           loading: false,
           error: null
         }
-      };
+      }
     case GET_NATIONALITIES_FAILURE: {
-      const nationalities = state.nationalities.data.map(item => ({ ...item }));
+      const nationalities = state.nationalities.data.map(item => ({ ...item }))
       return {
         ...state,
         nationalities: {
@@ -140,7 +140,7 @@ export default (state = initialState, action) => {
           loading: false,
           error: action.payload
         }
-      };
+      }
     }
     case GET_USER_DETAILS_START:
       return {
@@ -151,7 +151,7 @@ export default (state = initialState, action) => {
           loading: true,
           error: null
         }
-      };
+      }
     case GET_USER_DETAILS_SUCCESS:
       return {
         ...state,
@@ -161,7 +161,7 @@ export default (state = initialState, action) => {
           loading: false,
           error: null
         }
-      };
+      }
     case GET_USER_DETAILS_FAILURE:
       return {
         ...state,
@@ -171,7 +171,7 @@ export default (state = initialState, action) => {
           loading: false,
           error: action.payload
         }
-      };
+      }
     case UPDATE_USER_START:
       return {
         ...state,
@@ -181,7 +181,7 @@ export default (state = initialState, action) => {
           loading: true,
           error: null
         }
-      };
+      }
     case UPDATE_USER_FINISH:
       return {
         ...state,
@@ -191,16 +191,16 @@ export default (state = initialState, action) => {
           loading: false,
           error: null
         }
-      };
+      }
     case GET_NATIONALITIES_HASH:
-      return { ...state, nationalitiesHash: action.payload };
+      return { ...state, nationalitiesHash: action.payload }
     case GET_RANKS_START: {
       return {
         ...state,
         ranks: {
           loading: true
         }
-      };
+      }
     }
     case GET_RANKS_SUCCESS:
       return {
@@ -208,16 +208,16 @@ export default (state = initialState, action) => {
         ranks: {
           loading: false
         }
-      };
+      }
     case GET_RANKS_FAILURE: {
       return {
         ...state,
         ranks: {
           loading: false
         }
-      };
+      }
     }
     default:
-      return state;
+      return state
   }
-};
+}

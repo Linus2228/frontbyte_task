@@ -1,15 +1,15 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { userLogin } from "../../actions/authActions";
-import LoginForm from "./LoginForm";
-import { HomeInt } from "../../utils/int";
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { userLogin } from '../../actions/authActions'
+import LoginForm from './LoginForm'
+import { HomeInt } from '../../utils/int'
 
 const Home = () => {
-  const userName = useSelector(state => state.auth.currentUser.userName);
-  const lang = useSelector(state => state.controls.lang.value);
-  const dispatch = useDispatch();
+  const userName = useSelector(state => state.auth.currentUser.userName)
+  const lang = useSelector(state => state.controls.lang.value)
+  const dispatch = useDispatch()
 
-  const { greeting, desc, login, loginForm: loginFormInt } = HomeInt[lang];
+  const { greeting, desc, login, loginForm: loginFormInt } = HomeInt[lang]
 
   return (
     <div>
@@ -22,13 +22,13 @@ const Home = () => {
           <LoginForm
             loginFormInt={loginFormInt}
             loginUser={userInfo => {
-              dispatch(userLogin(userInfo));
+              dispatch(userLogin(userInfo))
             }}
           />
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

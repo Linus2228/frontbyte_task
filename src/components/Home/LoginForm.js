@@ -1,24 +1,20 @@
-import React from "react";
-import PropTypes from 'prop-types';
-import { useForm } from "../../hooks";
-import { validateLoginForm as validate } from "../../utils/validation";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useForm } from '../../hooks'
+import { validateLoginForm as validate } from '../../utils/validation'
 
 const initialUserData = {
-  User: "Admin",
-  Password: "Demo2020",
-  Company: "DemoCompany"
-};
+  User: 'Admin',
+  Password: 'Demo2020',
+  Company: 'DemoCompany'
+}
 
-const Login = ({
-  loginUser,
-  loginFormInt
-}) => {
-  const {
-    values,
-    errors,
-    handleChange,
-    handleSubmit
-  } = useForm(loginUser, validate, initialUserData);
+const Login = ({ loginUser, loginFormInt }) => {
+  const { values, errors, handleChange, handleSubmit } = useForm(
+    loginUser,
+    validate,
+    initialUserData
+  )
 
   return (
     <div className="section is-fullheight">
@@ -31,11 +27,11 @@ const Login = ({
                 <div className="control">
                   <input
                     autoComplete="on"
-                    className={`input ${errors.User && "is-danger"}`}
+                    className={`input ${errors.User && 'is-danger'}`}
                     type="text"
                     name="User"
                     onChange={handleChange}
-                    value={values.User || ""}
+                    value={values.User || ''}
                     required
                   />
                   {errors.User && (
@@ -48,11 +44,11 @@ const Login = ({
                 <div className="control">
                   <input
                     autoComplete="on"
-                    className={`input ${errors.Company && "is-danger"}`}
+                    className={`input ${errors.Company && 'is-danger'}`}
                     type="text"
                     name="Company"
                     onChange={handleChange}
-                    value={values.Company || ""}
+                    value={values.Company || ''}
                     required
                   />
                   {errors.Company && (
@@ -65,11 +61,11 @@ const Login = ({
                 <div className="control">
                   <input
                     autoComplete="on"
-                    className={`input ${errors.Password && "is-danger"}`}
+                    className={`input ${errors.Password && 'is-danger'}`}
                     type="password"
                     name="Password"
                     onChange={handleChange}
-                    value={values.Password || ""}
+                    value={values.Password || ''}
                     required
                   />
                   {errors.Password && (
@@ -88,12 +84,12 @@ const Login = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
-  loginFormInt: PropTypes.object.isRequired,
+  loginFormInt: PropTypes.object.isRequired
 }
 
-export default Login;
+export default Login
