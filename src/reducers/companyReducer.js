@@ -21,7 +21,9 @@ import {
 
 const initialState = {
   summary: {
-    data: {},
+    data: {
+      Trainings: []
+    },
     loading: false,
     error: null
   },

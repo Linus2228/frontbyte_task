@@ -9,6 +9,7 @@ import {
 import { CircularLoader as Loader } from '../Loaders'
 import UsersTable from './UsersTable'
 import { UsersListInt } from '../../utils/int'
+import { selectUsers } from '../../utils/selectors'
 
 const initialNationalitiesHash = {}
 
@@ -17,6 +18,7 @@ const UsersList = () => {
   const { data: fetchedUsers, loading: isUsersLoading } = useSelector(
     state => state.company.users
   )
+  const filteredUsers = useSelector(selectUsers(search))
   const { data: nationalities, loading: isNationalitiesLoading } = useSelector(
     state => state.company.nationalities
   )
@@ -30,8 +32,8 @@ const UsersList = () => {
 
   const dispatch = useDispatch()
   const isLoading =
-    fetchedUsers.length === 0 ||
-    nationalities.length === 0 ||
+    !isFetchedUsers ||
+    !isNationalities ||
     isUsersLoading ||
     isNationalitiesLoading
 
@@ -58,17 +60,21 @@ const UsersList = () => {
     return nationalityObject
   }
 
-  const users = fetchedUsers
-    .filter(user => user.Firstname.toLowerCase().includes(search.toLowerCase()))
+  const users = filteredUsers
     .map((user, index, array) => {
       const nationalityCode = user.Nationality
-      const nationalityObject = isNationalitiesHash
-        ? nationalitiesHash[nationalityCode]
-        : initialNationalitiesHash[nationalityCode] ||
-          getNationalityObject(nationalityCode)
+      let nationalityObject
 
-      if (index === array.length - 1 && !isNationalitiesHash) {
-        dispatch(getNationalitiesHash(initialNationalitiesHash))
+      if (isNationalitiesHash) {
+        nationalityObject = nationalitiesHash[nationalityCode]
+      } else {
+        nationalityObject =
+        initialNationalitiesHash[nationalityCode] ||
+        getNationalityObject(nationalityCode)
+
+        if (index === array.length - 1 && !isNationalitiesHash) {
+          dispatch(getNationalitiesHash(initialNationalitiesHash))
+        }
       }
       const { Name, Order } = nationalityObject
       return { ...user, NationalityName: Name, Order }

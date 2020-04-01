@@ -12,6 +12,7 @@ import {
 } from '../../actions/companyActions'
 import { useProtectRoute } from '../../hooks'
 import { UserDetailsInt } from '../../utils/int'
+import { selectNationalities } from '../../utils/selectors'
 
 const handleDate = date => {
   const array = moment(date)
@@ -31,16 +32,17 @@ const UserDetails = () => {
   const { data: userDetails, loading: isUserDetailsLoading } = useSelector(
     state => state.company.userDetails
   )
-  const { data: nationalities, loading: isNationalitiesLoading } = useSelector(
+  const { loading: isNationalitiesLoading } = useSelector(
     state => state.company.nationalities
   )
+  const nationalitiesOptions = useSelector(selectNationalities)
   const { loading: isRanksLoading } = useSelector(state => state.company.ranks)
   const ranks = JSON.parse(sessionStorage.getItem('ranks'))
 
   const lang = useSelector(state => state.controls.lang.value)
 
   const isUserDetails = Object.keys(userDetails).length !== 0
-  const isNationalities = nationalities.length !== 0
+  const isNationalities = nationalitiesOptions.length !== 0
   const isRanks = ranks && ranks.length !== 0
 
   const getActions = () => {
@@ -61,12 +63,6 @@ const UserDetails = () => {
       .map(rank => ({ ...rank }))
       .sort((a, b) => a.Order - b.Order)
       .map(rank => ({ value: rank.Id, label: rank.Name }))
-
-  const getNationalitiesOptions = () =>
-    nationalities
-      .map(nationality => ({ ...nationality }))
-      .sort((a, b) => a.Order - b.Order)
-      .map(nationality => ({ value: nationality.Id, label: nationality.Name }))
 
   const navigateToUsers = () => history.push('/users')
 
@@ -101,7 +97,6 @@ const UserDetails = () => {
   const rankOptions = getRankOptions()
   const rankIndex = rankOptions.findIndex(rank => rank.value === Rank)
 
-  const nationalitiesOptions = getNationalitiesOptions()
   const nationalityIndex = nationalitiesOptions.findIndex(
     nationality => nationality.value === Nationality
   )
