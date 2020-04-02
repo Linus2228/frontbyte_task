@@ -3,17 +3,10 @@ import PropTypes from 'prop-types'
 import { useForm } from '../../hooks'
 import { validateLoginForm as validate } from '../../utils/validation'
 
-const initialUserData = {
-  User: 'Admin',
-  Password: 'Demo2020',
-  Company: 'DemoCompany'
-}
-
 const Login = ({ loginUser, loginFormInt }) => {
   const { values, errors, handleChange, handleSubmit } = useForm(
     loginUser,
-    validate,
-    initialUserData
+    validate
   )
 
   return (
