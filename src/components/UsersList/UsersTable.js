@@ -122,7 +122,7 @@ export const UsersTable = props => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
   const history = useHistory()
 
-  const { tableCells } = UsersTableInt[lang]
+  const { tableCells, edit } = UsersTableInt[lang]
   const updatedTableCells = generateTableCellsDecorator(0, tableCells)()
 
   useEffect(() => {
@@ -174,7 +174,7 @@ export const UsersTable = props => {
                     history.push(`/users/${user.Id}`)
                   }}
                 >
-                  Edit
+                  {edit}
                 </Button>
               </TableCell>
             </TableRow>

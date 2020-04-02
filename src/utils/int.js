@@ -65,7 +65,8 @@ export const UsersTableInt = {
       surname: 'Surname',
       nationality: 'Nationality',
       editUser: 'Edit user'
-    }
+    },
+    edit: 'Edit'
   },
   pol: {
     tableCells: {
@@ -73,7 +74,8 @@ export const UsersTableInt = {
       surname: 'Nazwisko',
       nationality: 'Narodowosc',
       editUser: 'Edytuj'
-    }
+    },
+    edit: 'Edytuj'
   }
 }
 
@@ -94,6 +96,6 @@ export const UserDetailsInt = {
     rank: 'Ranga',
     birthday: 'Urodziny',
     address: 'Adres',
-    updateUser: 'Zaktualizuj uzytkownika'
+    updateUser: 'Zaktualizuj'
   }
 }
